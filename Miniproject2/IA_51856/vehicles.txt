@@ -1,0 +1,21 @@
+Car,Manish,Toyota,Innova,2020,5
+Bike,John,Honda,Shine,2019,Commuter
+Car,Abhisek,Hyundai,Creta,2022,5
+Car,Sam,Mahindra,Bolero,2026,5
+Bike,Hyfen,Royal Enfield,GT 650,2020,cruiser
+Car,Manthan,BMW,M4,2020,2
+Car,Shubham,BMW,M5 ,2020,4
+Bike,Shubham,TVS,Ronin,2027,cruiser
+Car,tushar kumar,rolls royce,phantom,2020,4
+Car,Tom,Maruti ,swift,2020,5
+Bike,Tushar kumar,TVS,RR 310,2026,Sports
+Bike,Gusain,TVS,Ronin,2027,cruiser
+Car,Subh ,Mahindra,Bolero,2028,5
+Car,Noor,Maruti,Swift,2026,5
+Bike,Reuben,Royal Enfield,Classic 500cc,2025,cruiser
+Bike,Mayur,Royal Enfield,Super Meteor,2025,cruiser
+Car,Afzal,Honda,City,2022,5
+Bike,Jatin,Royal Enfield,GT 650,2026,cruiser
+Car,Jaggi,Toyota,Camary,2025,5
+Bike,IJAZ,ROYAL ENFIELD,CLASSIC 350,2022,CRUISER
+Car,IJAZ,VW,VIRTUS,2025,5
