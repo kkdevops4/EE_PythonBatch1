@@ -1,0 +1,74 @@
+[
+    {
+        "vin": "MBJ2008T0A1234567",
+        "customer_name": "Shubam Gusain",
+        "model": "Innova",
+        "color": "Red"
+    },
+    {
+        "vin": "JTD2007P9B7654321",
+        "customer_name": "Israr Ahmed",
+        "model": "Prius",
+        "color": "Black"
+    },
+    {
+        "vin": "MHX2012T1C2345678",
+        "customer_name": "Sumit Kumar",
+        "model": "Innova",
+        "color": "White"
+    },
+    {
+        "vin": "4T12010P3D9876543",
+        "customer_name": "Krishankant Singh",
+        "model": "Prius",
+        "color": "Red"
+    },
+    {
+        "vin": "MBJ2015T7E3456789",
+        "customer_name": "Nikhil Kumar",
+        "model": "Innova",
+        "color": "Black"
+    },
+    {
+        "vin": "JTD2011P2F4567890",
+        "customer_name": "Pamella Shome",
+        "model": "Prius",
+        "color": "White"
+    },
+    {
+        "vin": "MHX2018T4G5678901",
+        "customer_name": "Aakash Devkar",
+        "model": "Innova",
+        "color": "Red"
+    },
+    {
+        "vin": "4T12013P8H6789012",
+        "customer_name": "Ashutosh Dharmadhikari",
+        "model": "Prius",
+        "color": "Black"
+    },
+    {
+        "vin": "MBJ2019T6I7890123",
+        "customer_name": "Ishaan Patil",
+        "model": "Innova",
+        "color": "White"
+    },
+    {
+        "vin": "JTD2016P5J8901234",
+        "customer_name": "Harsh Chougule",
+        "model": "Prius",
+        "color": "Red"
+    },
+    {
+        "vin": "MBJ2015T7E3486257",
+        "customer_name": "Joseph Vijay Chandrashekar ",
+        "model": "Innova",
+        "color": "White "
+    },
+    {
+        "vin": "MBJ2015T7E3486145",
+        "customer_name": "Ash Ketchum",
+        "model": "Prius",
+        "color": "White"
+    }
+]
