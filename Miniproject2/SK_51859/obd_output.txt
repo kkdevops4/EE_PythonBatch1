@@ -1,0 +1,14 @@
+
+-----------------------------
+SUCCESS: Signal Received
+SUCCESS: 26C - ALL OK (ambient_temp)
+
+-----------------------------
+SUCCESS: Signal Received
+SUCCESS: 36C - ALL OK (initial_warm_up)
+
+-----------------------------
+SUCCESS: Signal Received
+ERROR: Temperature HIGH 90C for engine_warming_faster
+Delay Time: 7 
+Temperature of Coolant StatusFalse
