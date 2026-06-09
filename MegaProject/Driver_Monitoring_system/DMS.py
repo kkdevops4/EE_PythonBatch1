@@ -146,22 +146,9 @@ for _, row in report.iterrows():
 
     plt.figure(figsize=(10, 6))
 
-    bars = plt.bar(
-        labels,
-        metrics,
-        color=[
-            "red",
-            "orange",
-            "purple",
-            "green"
-        ]
-    )
+    bars = plt.bar(labels,metrics,color=["red","orange","purple","green"])
 
-    plt.title(
-        f"Driver Performance Report\n"
-        f"{row['Driver_names']} "
-        f"(ID: {row['Driver_ID']})"
-    )
+    plt.title(f"Driver Performance Report\n{row['Driver_names']}(ID: {row['Driver_ID']})")
 
     plt.ylabel("Value")
 
@@ -247,11 +234,7 @@ for _, row in report.iterrows():
 
     remark = get_driver_remark(attention)
 
-    doc.add_heading(
-        f"Driver: {row['Driver_names']} "
-        f"(ID: {row['Driver_ID']})",
-        level=1
-    )
+    doc.add_heading(f"Driver: {row['Driver_names']} (ID: {row['Driver_ID']})",level=1)
 
     doc.add_paragraph(generate_driver_report(row,remark))
 
@@ -259,25 +242,16 @@ for _, row in report.iterrows():
 
     if os.path.exists(graph_file):
 
-        doc.add_picture(
-            graph_file,
-            width=Inches(5.5)
-        )
+        doc.add_picture(graph_file,width=Inches(5.5))
     doc.add_page_break()
 
 # OVERALL COMPARISON GRAPH
 
-doc.add_heading(
-    "Driver Attention Score Comparison",
-    level=1
-)
+doc.add_heading("Driver Attention Score Comparison",level=1)
 
 if os.path.exists(comparison_graph):
 
-    doc.add_picture(
-        comparison_graph,
-        width=Inches(6)
-    )
+    doc.add_picture(comparison_graph,width=Inches(6))
 
 # SAVE WORD FILE
 
