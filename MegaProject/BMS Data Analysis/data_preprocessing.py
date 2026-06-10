@@ -1,9 +1,11 @@
 import pandas as pd
 
-df = pd.read_csv(
-    "data/BMWi3_22kWh_24h_battery_timeline.csv",
-    sep="\t"
-)
+# df = pd.read_csv(
+#     "data/BMWi3_22kWh_24h_battery_timeline.csv",
+#     sep="\t"
+# )
+
+df = pd.read_excel("data/BMWi3_22kWh_24h_battery_timeline.xlsx")
 
 print(df.head())
 

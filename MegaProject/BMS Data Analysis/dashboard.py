@@ -126,6 +126,7 @@ else:
 
 st.markdown("---")
 
+#2x2 Battery Performace Trends
 st.subheader("Battery Performace at a Glance")
 fig = make_subplots(
     rows=2,
@@ -275,12 +276,8 @@ st.plotly_chart(fig, use_container_width=True)
 
 #TOTAL CHRAGING TIME
 charging_rows = len(df[df["battery_status"]=="Charging"])
-
 charging_hours = (charging_rows * 10) / 3600
-
 st.metric("Total Charging Time",f"{charging_hours:.2f} Hours")
-
-
 st.markdown("---")
 
 # ACTUAL VS IDEAL
@@ -307,6 +304,16 @@ fig.add_trace(
         name="Ideal SoC"
     )
 )
+# fig.update_layout(
+#     template = "plotly_dark",
+#     height = 500,
+#     showlegend = False,
+#     title = "Actual SoC vs Ideal SoC"
+# )
+fig.update_layout(
+    title = "Actual SoC vs Ideal SoC"
+)
+
 st.plotly_chart(fig)
 
 #TEMP COMPARISION
@@ -325,6 +332,12 @@ fig.add_trace(
         name="Ideal Temp"
     )
 )
+# fig.update_layout(
+#     template = "plotly_dark",
+#     height = 500,
+#     showlegend = False,
+#     title = "Actual Temp vs Ideal Temp"
+# )
 st.plotly_chart(fig, use_container_width=True)
 
 #VOLTAGE COMPARISON
@@ -345,7 +358,7 @@ fig.add_trace(
 )
 st.plotly_chart(fig, use_container_width=True)
 
-#KPI: EFFICIENCY SCORE
+# EFFICIENCY SCORE CARD
 actual_avg_soc = df["soc_percent"].mean()
 ideal_avg_soc = ideal_df["soc_percent"].mean()
 efficiency = (actual_avg_soc / ideal_avg_soc) * 100
