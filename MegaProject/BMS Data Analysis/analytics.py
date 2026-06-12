@@ -105,8 +105,8 @@ def load_data(file_path):
 # =====================================================
 def soc_summary(df):
     summary = {
-        "Latest Soc": round(df["soc_percent"].iloc[-1], 2),
-        "Average Soc": round(df["soc_percent"].mean(), 2),
+        "Latest SoC": round(df["soc_percent"].iloc[-1], 2),
+        "Average SoC": round(df["soc_percent"].mean(), 2),
         "Minimum SoC": round(df["soc_percent"].min(), 2),
         "Maximum SoC": round(df["soc_percent"].max(), 2)
     }
