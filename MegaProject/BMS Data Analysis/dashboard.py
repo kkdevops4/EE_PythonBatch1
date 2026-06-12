@@ -2,6 +2,8 @@
 # INSTRUCTIONS 
 # =====================================================
 '''
+To Install openpyxl:
+     python -m pip install openpyxl
 Run with:
     python -m streamlit run dashboard.py
 '''
