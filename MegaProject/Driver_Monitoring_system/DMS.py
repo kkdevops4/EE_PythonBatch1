@@ -5,10 +5,6 @@ import docx
 from docx.shared import Inches
 from docx2pdf import convert
 
-# CREATE OUTPUT FOLDER
-
-os.makedirs("graphs", exist_ok=True)
-
 # FUNCTIONS
 
 def get_driver_state(score):
@@ -30,7 +26,7 @@ def get_driver_remark(attention):
     elif attention >= 70:
         return ("Driver shows moderate attention levels. Short breaks are recommended during long trips.")
 
-    elif attention >= 55:
+    elif attention >= 50:
         return ("Driver is showing signs of fatigue. Continuous driving may affect safety and concentration.")
 
     else:
@@ -75,13 +71,14 @@ eye_score = eye_score.clip(0, 100)
 blink_score = blink_score.clip(0, 100)
 head_score = head_score.clip(0, 100)
 
-df["Attention_Score"] = (
-    eye_score * 0.60
-    + blink_score * 0.25
-    + head_score * 0.15
-).round(2)
+df["Attention_Score"] = (eye_score * 0.60 + blink_score * 0.25 + head_score * 0.15).round(2)
+ 
+states = []                            # eg.- states = ["Alert", "Moderate", "Slight Fatigue"]
 
-df["State"] = df["Attention_Score"].apply(get_driver_state)
+for score in df["Attention_Score"]:
+    states.append(get_driver_state(score))
+
+df["State"] = states                  # Pandas creates a new column in data frame i.e State                      
 
 # DRIVER SUMMARY
 
@@ -120,7 +117,7 @@ print("==============================\n")
 
 for _, row in report.iterrows():
 
-    attention = row["Avg_Attention_Score"]
+    attention = row["Avg_Attention_Score"]    # take the value in the column Avg_Attention_Score and store it in a variable called attention
 
     remark = get_driver_remark(attention)
 
@@ -221,6 +218,10 @@ comparison_graph = ("graphs/Driver_Attention_Comparison.png")
 
 plt.savefig(comparison_graph,dpi=300,bbox_inches="tight")
 plt.close()
+
+# CREATE OUTPUT FOLDER
+
+os.makedirs("graphs", exist_ok=True)       # exist_ok=True  If folder already exists don't give error. if we can't use this python crash second time.
 
 # WORD REPORT
 
