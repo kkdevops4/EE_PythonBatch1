@@ -6,7 +6,7 @@ import pandas as pd
 # =====================================================
 # READ EXCEL FILE
 # =====================================================
-df = pd.read_excel("data/BMWi3_22kWh_24h_battery_timeline.xlsx")
+df = pd.read_excel("data/BMW_i3_24H_Clean_Reference.xlsx")
 print(df.head()) #show first 5 rows
 print(df.info())
 print(df.isnull().sum())
