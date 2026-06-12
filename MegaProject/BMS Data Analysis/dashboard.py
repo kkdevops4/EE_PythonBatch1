@@ -75,6 +75,19 @@ col6.metric("Average Temperature", f"{avg_temp} °C")
 
 st.divider()
 
+# ==========================================
+# SIDEBAR - QUICK STATS
+# ==========================================
+
+st.sidebar.header("Quick Stats")
+
+st.sidebar.metric("Latest SoC",f"{latest_soc}%")
+st.sidebar.metric("Latest SoH",f"{latest_soh}%")
+st.sidebar.metric("Latest Voltage",f"{latest_voltage} V")
+st.sidebar.metric("Peak Temperature",f"{peak_temp} °C")
+st.sidebar.metric("Charging Time",f"{charging_hours} hrs")
+st.sidebar.metric("Average Temperature",f"{avg_temp} °C")
+
 # =====================================================
 # STATE OF CHARGE TRENDS
 # =====================================================
