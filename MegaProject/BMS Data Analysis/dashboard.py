@@ -9,7 +9,7 @@ Run with:
 '''
 
 # =====================================================
-# IMPORTING 
+# LIBRARY & FILES IMPORTS 
 # =====================================================
 import streamlit as st
 import pandas as pd
@@ -18,6 +18,13 @@ import plotly.express as px
 from analytics import *
 
 import plotly.graph_objects as go
+
+# =====================================================
+# HELPER FUNCTIONS
+# =====================================================
+def show_grid():
+    fig.update_xaxes(showgrid = True)
+    fig.update_yaxes(showgrid = True)
 
 # =====================================================
 # SETTING PAGE CONFIGURATION 
@@ -69,7 +76,7 @@ col6.metric("Average Temperature", f"{avg_temp} °C")
 st.divider()
 
 # =====================================================
-# STATE OF CHARGE  
+# STATE OF CHARGE TRENDS
 # =====================================================
 st.subheader("State of Charge Trend")
 
@@ -79,8 +86,7 @@ fig = px.line(
     y = "soc_percent",
     title = "State of Charge Over Time"
 )
-fig.update_xaxes(showgrid = True)
-fig.update_yaxes(showgrid = True)
+show_grid()
 
 st.plotly_chart(
     fig,
@@ -108,8 +114,7 @@ fig = px.line(
     y = "battery_voltage_v",
     title = "Battery Voltage over time"
 )
-fig.update_xaxes(showgrid = True)
-fig.update_yaxes(showgrid = True)
+show_grid()
 
 st.plotly_chart(
     fig,
@@ -126,8 +131,7 @@ fig = px.line(
     y = "battery_current_a", 
     title = "Battery current over time" 
 )
-fig.update_xaxes(showgrid = True)
-fig.update_yaxes(showgrid = True)
+show_grid()
 
 st.plotly_chart(
     fig,
@@ -155,8 +159,7 @@ fig = px.line(
     y = "battery_temp_c",
     title = "Battery Temperature Over Time"
 )
-fig.update_xaxes(showgrid = True)
-fig.update_yaxes(showgrid = True)
+show_grid()
 fig.add_hline(
     y = 45,
     line_dash = "dash",
@@ -176,8 +179,8 @@ min_temp = temp["Minimum Temperature"]
 # col1.metric("Maximum Temperature", f"{max_temp} °C")
 # col2.metric("Minimum Temperature", f"{min_temp} °C")
 
-st.info(f"Maximum Temperature, {max_temp} °C")
-st.info(f"Minimum Temperature, {min_temp} °C")
+st.info(f"Maximum Temperature: {max_temp} °C")
+st.info(f"Minimum Temperature: {min_temp} °C")
 
 if df["battery_temp_c"].max() > 45:
     st.error("Temperature exceeded the warning threshold")
