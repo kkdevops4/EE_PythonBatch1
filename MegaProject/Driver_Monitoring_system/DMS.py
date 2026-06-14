@@ -5,6 +5,10 @@ import docx
 from docx.shared import Inches
 from docx2pdf import convert
 
+# CREATE OUTPUT FOLDER
+
+os.makedirs("graphs", exist_ok=True)       # exist_ok=True  If folder already exists don't give error. if we can't use this python crash second time.
+
 # FUNCTIONS
 
 def get_driver_state(score):
@@ -218,10 +222,6 @@ comparison_graph = ("graphs/Driver_Attention_Comparison.png")
 
 plt.savefig(comparison_graph,dpi=300,bbox_inches="tight")
 plt.close()
-
-# CREATE OUTPUT FOLDER
-
-os.makedirs("graphs", exist_ok=True)       # exist_ok=True  If folder already exists don't give error. if we can't use this python crash second time.
 
 # WORD REPORT
 
