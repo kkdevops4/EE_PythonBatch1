@@ -7,7 +7,7 @@ from docx2pdf import convert
 
 # CREATE OUTPUT FOLDER
 
-os.makedirs("graphs", exist_ok=True)       # exist_ok=True  If folder already exists don't give error. if we can't use this python crash second time.
+os.makedirs("MegaProject/Driver_Monitoring_system/Report/graphs", exist_ok=True)       # exist_ok=True  If folder already exists don't give error. if we can't use this python crash second time.
 
 # FUNCTIONS
 
@@ -168,7 +168,7 @@ for _, row in report.iterrows():
 
     plt.tight_layout()
 
-    graph_file = (f"graphs/Driver_{row['Driver_ID']}_Performance.png")
+    graph_file = (f"MegaProject/Driver_Monitoring_system/Report/graphs/Driver_{row['Driver_ID']}_Performance.png")
 
     plt.savefig(graph_file,dpi=300,bbox_inches="tight")
 
@@ -218,7 +218,7 @@ plt.grid(axis="y", linestyle="--")
 
 plt.tight_layout()
 
-comparison_graph = ("graphs/Driver_Attention_Comparison.png")
+comparison_graph = ("MegaProject/Driver_Monitoring_system/Report/graphs/Driver_Attention_Comparison.png")
 
 plt.savefig(comparison_graph,dpi=300,bbox_inches="tight")
 plt.close()
@@ -256,7 +256,7 @@ if os.path.exists(comparison_graph):
 
 # SAVE WORD FILE
 
-doc_file = ("Driver_Monitoring_Report.docx")
+doc_file = ("MegaProject/Driver_Monitoring_system/Report/Driver_Monitoring_Report.docx")
 doc.save(doc_file)
 print("\nWord Report Saved Successfully!")
 
