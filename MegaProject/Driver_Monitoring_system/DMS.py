@@ -239,7 +239,7 @@ for _, row in report.iterrows():
 
     doc.add_paragraph(generate_driver_report(row,remark))
 
-    graph_file = (f"graphs/Driver_{row['Driver_ID']}_Performance.png")
+    graph_file = (f"MegaProject/Driver_Monitoring_system/Report/graphs/Driver_{row['Driver_ID']}_Performance.png")
 
     if os.path.exists(graph_file):
 
