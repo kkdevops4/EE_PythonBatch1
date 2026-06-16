@@ -59,7 +59,7 @@ Driver Assessment:
 
 # READ CSV
 
-csv_file = r"C:\Users\ia97974\Desktop\51856\EE_PythonBatch1\MegaProject\Driver_Monitoring_system\driver_monitoring_system_2.csv"
+csv_file = r"C:\Users\ia97974\Desktop\51856\EE_PythonBatch1\MegaProject\Driver_Monitoring_system\driver_monitoring_system_1.csv"
 
 df = pd.read_csv(csv_file)
 
