@@ -5,6 +5,10 @@ import docx
 from docx.shared import Inches
 from docx2pdf import convert
 
+# CREATE OUTPUT FOLDER
+
+os.makedirs("MegaProject/Driver_Monitoring_system/Report/graphs", exist_ok=True)       # exist_ok=True  If folder already exists don't give error. if we can't use this python crash second time.
+
 # FUNCTIONS
 
 def get_driver_state(score):
@@ -55,7 +59,7 @@ Driver Assessment:
 
 # READ CSV
 
-csv_file = r"C:\Users\ia97974\Desktop\51856\EE_PythonBatch1\MegaProject\Driver_Monitoring_system\driver_monitoring_system_2.csv"
+csv_file = r"C:\Users\ia97974\Desktop\51856\EE_PythonBatch1\MegaProject\Driver_Monitoring_system\driver_monitoring_system_1.csv"
 
 df = pd.read_csv(csv_file)
 
@@ -164,7 +168,7 @@ for _, row in report.iterrows():
 
     plt.tight_layout()
 
-    graph_file = (f"graphs/Driver_{row['Driver_ID']}_Performance.png")
+    graph_file = (f"MegaProject/Driver_Monitoring_system/Report/graphs/Driver_{row['Driver_ID']}_Performance.png")
 
     plt.savefig(graph_file,dpi=300,bbox_inches="tight")
 
@@ -214,14 +218,10 @@ plt.grid(axis="y", linestyle="--")
 
 plt.tight_layout()
 
-comparison_graph = ("graphs/Driver_Attention_Comparison.png")
+comparison_graph = ("MegaProject/Driver_Monitoring_system/Report/graphs/Driver_Attention_Comparison.png")
 
 plt.savefig(comparison_graph,dpi=300,bbox_inches="tight")
 plt.close()
-
-# CREATE OUTPUT FOLDER
-
-os.makedirs("graphs", exist_ok=True)       # exist_ok=True  If folder already exists don't give error. if we can't use this python crash second time.
 
 # WORD REPORT
 
@@ -239,7 +239,7 @@ for _, row in report.iterrows():
 
     doc.add_paragraph(generate_driver_report(row,remark))
 
-    graph_file = (f"graphs/Driver_{row['Driver_ID']}_Performance.png")
+    graph_file = (f"MegaProject/Driver_Monitoring_system/Report/graphs/Driver_{row['Driver_ID']}_Performance.png")
 
     if os.path.exists(graph_file):
 
@@ -256,7 +256,7 @@ if os.path.exists(comparison_graph):
 
 # SAVE WORD FILE
 
-doc_file = ("Driver_Monitoring_Report.docx")
+doc_file = ("MegaProject/Driver_Monitoring_system/Report/Driver_Monitoring_Report.docx")
 doc.save(doc_file)
 print("\nWord Report Saved Successfully!")
 
