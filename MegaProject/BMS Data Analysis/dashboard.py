@@ -79,7 +79,7 @@ st.divider()
 # SIDEBAR - QUICK STATS
 # ==========================================
 
-st.sidebar.header("QUICK STATS")
+st.sidebar.header("BATTERY OVERVIEW STATS")
 
 st.sidebar.metric("Latest SoC",f"{latest_soc}%")
 st.sidebar.metric("Latest SoH",f"{latest_soh}%")
