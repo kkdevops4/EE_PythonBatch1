@@ -21,7 +21,6 @@ def get_driver_state(score):
     else:
         return "Drowsy"
 
-
 def get_driver_remark(attention):
 
     if attention >= 85:
@@ -52,16 +51,54 @@ Average Head Pitch  : {row['Avg_Head_Pitch']:.2f}°
 
 Attention Score     : {row['Avg_Attention_Score']:.2f}
 Driver State        : {row['Final_State']}
+Driving Session     : {row['Time_Period']}        
 
 Driver Assessment:
 {remark}
 """
 
+# for Driving session
+
+def get_time_period(timestamp):      
+
+    hour = timestamp.hour
+
+    if 5 <= hour < 12:
+        return "Morning"
+
+    elif 12 <= hour < 17:
+        return "Afternoon"
+
+    elif 17 <= hour < 22:
+        return "Night"
+
+    else:
+        return "Early Morning"
+
+
+def get_time_risk(period):
+
+    if period == "Morning":
+        return "Low Risk"
+
+    elif period == "Afternoon":
+        return "Medium Risk"
+
+    elif period == "Night":
+        return "High Risk"
+
+    else:
+        return "Very High Risk"
+    
 # READ CSV
 
 csv_file = r"C:\Users\ia97974\Desktop\51856\EE_PythonBatch1\MegaProject\Driver_Monitoring_system\driver_monitoring_system_1.csv"
 
 df = pd.read_csv(csv_file)
+
+df["Timestamp"] = pd.to_datetime(df["Timestamp"])   
+
+df["Time_Period"] = df["Timestamp"].apply(get_time_period) 
 
 # ATTENTION SCORE
 
@@ -76,19 +113,105 @@ blink_score = blink_score.clip(0, 100)
 head_score = head_score.clip(0, 100)
 
 df["Attention_Score"] = (eye_score * 0.60 + blink_score * 0.25 + head_score * 0.15).round(2)
+
+
+# LINE GRAPH FOR EACH DRIVER
+
+for driver_id in df["Driver_ID"].unique():
+
+    driver_data = df[df["Driver_ID"] == driver_id]
+
+    driver_name = driver_data["Driver_names"].iloc[0]
+    
+    time_period = driver_data["Time_Period"].iloc[0] 
+    risk = get_time_risk(time_period)                 
+
+    plt.figure(figsize=(10, 6))
+
+    plt.plot(
+        driver_data["Time_Minutes"],
+        driver_data["Eye_Closure_Percentage"],
+        label="Eye Closure %",
+        color="red",
+        linewidth=2
+    )
+
+    plt.plot(
+        driver_data["Time_Minutes"],
+        driver_data["Blink_Rate"],
+        label="Blink Rate",
+        color="orange",
+        linewidth=2
+    )
+
+    plt.plot(
+        driver_data["Time_Minutes"],
+        driver_data["Head_Pitch_Angle"],
+        label="Head Pitch",
+        color="purple",
+        linewidth=2
+    )
+
+    plt.plot(
+        driver_data["Time_Minutes"],
+        driver_data["Attention_Score"],
+        label="Attention Score",
+        color="green",
+        linewidth=3
+    )
+
+    plt.axhspan(85,100,color="green",alpha=0.15)
+    plt.axhspan(70,85,color="yellow",alpha=0.15)
+    plt.axhspan(50,70,color="orange",alpha=0.15)
+    plt.axhspan(0,50,color="red",alpha=0.15)         
+    
+    plt.title(f"Driver Monitoring Trend\n {driver_name} (ID: {driver_id})\n Session: {time_period}")   
+
+    plt.xlabel("Time (Minutes)")
+    plt.ylabel("Value")
+
+    plt.legend()
+    plt.grid(True, linestyle="--")
+    
+
+    plt.text(                      
+    0.02,
+    0.95,
+    f"Session: {time_period}",
+    transform=plt.gca().transAxes,
+    fontsize=11,
+    bbox=dict(facecolor="white")
+)
+
+    plt.text(                      
+        0.02,
+        0.88,
+        f"Risk: {risk}",
+        transform=plt.gca().transAxes,
+        fontsize=11,
+        bbox=dict(facecolor="white")
+    )
+
+    plt.tight_layout()
+
+    graph_file = (f"MegaProject/Driver_Monitoring_system/Report/graphs/Driver_{driver_id}_Attention_Trend.png")
+
+    plt.savefig(graph_file, dpi=300, bbox_inches="tight")
+    plt.close()
+ 
  
 states = []                            # eg.- states = ["Alert", "Moderate", "Slight Fatigue"]
 
 for score in df["Attention_Score"]:
-    states.append(get_driver_state(score))
+    states.append(get_driver_state(score)) 
 
-df["State"] = states                  # Pandas creates a new column in data frame i.e State                      
+df["State"] = states                  # Pandas creates a new column in data frame i.e State
 
-# DRIVER SUMMARY
 
-report = df.groupby(
+report = df.groupby(                     
     ["Driver_ID", "Driver_names"]
 ).agg({
+    "Time_Period": "first",
     "Time_Minutes": "max",
     "Travel_Distance_km": "max",
     "Eye_Closure_Percentage": "mean",
@@ -97,13 +220,18 @@ report = df.groupby(
     "Attention_Score": "mean"
 }).reset_index()
 
-final_state = df.groupby(["Driver_ID", "Driver_names"])["State"].last().reset_index()
+avg_state = (df.groupby(["Driver_ID", "Driver_names"])["Attention_Score"].mean().reset_index())
+avg_state["Driver_State"] = avg_state["Attention_Score"].apply(get_driver_state)
+abc = avg_state["Driver_State"].to_list()
 
-report = report.merge(final_state,on=["Driver_ID", "Driver_names"])
+avg_state["Final_State"] = abc
 
-report.columns = [
+report = report.merge(avg_state[["Driver_ID", "Driver_names", "Final_State"]],on=["Driver_ID", "Driver_names"],how="left")
+
+report.columns = [          
     "Driver_ID",
     "Driver_names",
+    "Time_Period",
     "Total_Time_Minutes",
     "Total_Distance_km",
     "Avg_Eye_Closure",
@@ -136,7 +264,8 @@ for _, row in report.iterrows():
         row["Avg_Blink_Rate"],
         row["Avg_Head_Pitch"],
         row["Avg_Attention_Score"]
-    ]
+        
+    ]                                                      # EXAMPLE- metrics = [20, 15, 10, 85]
 
     labels = [
         "Eye Closure %",
@@ -149,9 +278,11 @@ for _, row in report.iterrows():
 
     bars = plt.bar(labels,metrics,color=["red","orange","purple","green"])
 
-    plt.title(f"Driver Performance Report\n{row['Driver_names']}(ID: {row['Driver_ID']})")
+    plt.title(f"Driver Performance Report\n {row['Driver_names']} (ID: {row['Driver_ID']})\n Session: {row['Time_Period']}")
 
     plt.ylabel("Value")
+
+# add the numerical value on top of each bar
 
     for bar in bars:
 
@@ -160,8 +291,8 @@ for _, row in report.iterrows():
             + bar.get_width()/2,
             bar.get_height(),
             f"{bar.get_height():.1f}",
-            ha="center",
-            va="bottom"
+            ha="center",               # ha = Horizontal Alignment
+            va="bottom"                # va = Vertical Alignment
         )
 
     plt.grid(axis="y", linestyle="--")
@@ -170,7 +301,8 @@ for _, row in report.iterrows():
 
     graph_file = (f"MegaProject/Driver_Monitoring_system/Report/graphs/Driver_{row['Driver_ID']}_Performance.png")
 
-    plt.savefig(graph_file,dpi=300,bbox_inches="tight")
+    plt.savefig(graph_file,dpi=300,bbox_inches="tight")                # dpi=300 High quality image, Suitable for reports and PDFs
+                                                                       # bbox_inches="tight" Removes unnecessary white space around the graph.
 
     plt.close()
 
@@ -180,11 +312,7 @@ driver_attention = report.set_index("Driver_names")["Avg_Attention_Score"]
 
 plt.figure(figsize=(10, 6))
 
-bars = plt.bar(
-    driver_attention.index,
-    driver_attention.values,
-    color="skyblue"
-)
+bars = plt.bar(driver_attention.index,driver_attention.values,color="skyblue")
 
 for bar in bars:
 
@@ -227,7 +355,7 @@ plt.close()
 
 doc = docx.Document()
 
-doc.add_heading("Driver Monitoring System Report",level=0)
+doc.add_heading("Driver Monitoring System Report", level=0)
 
 for _, row in report.iterrows():
 
@@ -237,15 +365,35 @@ for _, row in report.iterrows():
 
     doc.add_heading(f"Driver: {row['Driver_names']} (ID: {row['Driver_ID']})",level=1)
 
-    doc.add_paragraph(generate_driver_report(row,remark))
+    doc.add_paragraph(generate_driver_report(row, remark))
 
-    graph_file = (f"MegaProject/Driver_Monitoring_system/Report/graphs/Driver_{row['Driver_ID']}_Performance.png")
+    #############
+    # BAR GRAPH
+    #############
 
-    if os.path.exists(graph_file):
+    performance_graph = (f"MegaProject/Driver_Monitoring_system/Report/graphs/Driver_{row['Driver_ID']}_Performance.png")
 
-        doc.add_picture(graph_file,width=Inches(5.5))
+    if os.path.exists(performance_graph):
+
+        doc.add_heading("Performance Summary",level=2)
+
+        doc.add_picture(performance_graph,width=Inches(5.5))
+
+    #############
+    # LINE GRAPH
+    #############
+
+    trend_graph = (f"MegaProject/Driver_Monitoring_system/Report/graphs/Driver_{row['Driver_ID']}_Attention_Trend.png")
+
+    if os.path.exists(trend_graph):
+
+        doc.add_heading("Attention Score Trend",level=2)
+
+        doc.add_picture(trend_graph,width=Inches(5.5))
+
     doc.add_page_break()
-
+    
+    
 # OVERALL COMPARISON GRAPH
 
 doc.add_heading("Driver Attention Score Comparison",level=1)
