@@ -1,6 +1,6 @@
 '''
 pip install kaleido
-pip install 
+pip install python-docx
 '''
 
 import pandas as pd

@@ -17,8 +17,6 @@ import plotly.express as px
 
 from analytics import *
 
-import plotly.graph_objects as go
-
 # =====================================================
 # HELPER FUNCTIONS
 # =====================================================
