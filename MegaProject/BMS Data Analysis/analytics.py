@@ -66,3 +66,4 @@ if __name__ == "__main__": #Only run this code if this file is the program's sta
     print(soh_summary(df))
     print(temperature_summary(df))
     print(power_summary(df))
+    print("Analytics done")
