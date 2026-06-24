@@ -203,6 +203,27 @@ st.caption("Higher temperatures may indicate heavy vehicle usage, fast charging,
 st.divider()
 
 # =====================================================
+# SOC VS SPEED
+# =====================================================
+st.subheader("SoC vs Vehicle Speed")
+
+fig = px.scatter(
+    df,
+    x = "vehicle_speed_kmph",
+    y = "soc_percent",
+    title = "SoC vs Vehcile Speed"
+)
+show_grid()
+st.plotly_chart(fig, use_container_width=True)
+
+st.info("""
+This chart shows how battery State of Charge varies with vehicle speed.
+Clusters at higher speeds may indicate faster battery depletion.
+""")
+
+st.divider()
+
+# =====================================================
 # BATTERY SUMMARY 
 # =====================================================
 
