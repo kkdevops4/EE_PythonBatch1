@@ -1,41 +1,49 @@
 # EV Battery Management System (BMS) Data Analytics Platform
 
-This project is a Python-based EV Battery Management System (BMS) analytics platform developed to monitor, analyze, and visualize battery performance data. Using BMW i3 battery telemetry data, the system performs data preprocessing, battery analytics, anomaly detection, and dashboard visualization through Streamlit and Plotly.
+This project is a Python-based EV Battery Management System (BMS) analytics platform developed to monitor, analyze, visualize, and report battery performance data. Using BMW i3 battery telemetry data, the system performs battery health analysis, charging behavior monitoring, temperature tracking, dashboard visualization, and automated report generation.
 
 ### Current Features
 
-* Battery State of Charge (SOC) analysis
-* Battery State of Health (SOH) monitoring
-* Temperature trend analysis
+* State of Charge (SoC) analysis
+* State of Health (SoH) monitoring
+* Voltage and current trend analysis
+* Temperature trend analysis and alert monitoring
 * Charging and discharging behavior analysis
-* Battery condition and alert monitoring
-* Operating state distribution analysis
-* Actual vs Ideal battery performance comparison
-* Interactive dashboard visualization
+* SoC vs Vehicle Speed analytics
+* Battery condition assessment
+* Interactive Streamlit dashboard
+* Automated Word and PDF report generation
+* Plotly-based data visualizations
 
 ### Project Architecture
 
-1. **Data Preprocessing Module**
+#### 1. Data Processing Module
 
-   * Data cleaning and validation
-   * Timestamp processing
-   * Feature engineering
-   * Severity and anomaly detection
-   * Processed dataset generation
+* Data loading and validation
+* Timestamp processing
+* Data cleaning and preparation
 
-2. **Analytics Module**
+#### 2. Analytics Module
 
-   * Battery health analytics
-   * SOC and temperature analysis
-   * Charging behavior analysis
-   * Power analysis
-   * Trend generation for dashboard visualization
+* Battery health analytics
+* SoC and SoH analysis
+* Temperature monitoring
+* Charging behavior analysis
+* Performance summary generation
 
-3. **Dashboard Module**
+#### 3. Dashboard Module
 
-   * Streamlit-based dashboard
-   * Plotly visualizations
-   * KPI monitoring and alert system
+* Streamlit-based interactive dashboard
+* KPI monitoring
+* Plotly visualizations
+* Alert and status monitoring
+
+#### 4. Reporting Module
+
+* Automated report generation
+* Word (.docx) export
+* PDF export
+* KPI summaries and charts
 
 ### Technologies Used
 
@@ -43,20 +51,45 @@ This project is a Python-based EV Battery Management System (BMS) analytics plat
 * Pandas
 * Streamlit
 * Plotly
+* python-docx
+* docx2pdf
+* Kaleido
+
+### Installation
+
+Clone the repository and install all dependencies:
+
+```bash
+py -m pip install -r requirements.txt
 
 ### Current Status
 
-This project is currently under development and serves as an initial prototype of a Battery Analytics Platform. Core preprocessing, analytics, and dashboard functionalities have been implemented successfully.
+###Run the dashboard
+
+```bash
+py -m streamlit run dashboard.py
+
+###Create Report
+
+```bash
+python report.py
+
+Version 2.0 is functional and capable of:
+
+* Processing EV battery telemetry data
+* Performing battery analytics
+* Generating interactive dashboards
+* Creating professional Word and PDF reports
 
 ### Future Enhancements
 
-The project is being continuously improved with guidance from senior engineers and mentors. Planned enhancements include:
+* Energy consumption analysis (kWh)
+* Charge cycle estimation
+* Advanced battery degradation analytics
+* Machine Learning based anomaly detection
+* Real-time monitoring capabilities
+* Cloud integration and data storage
 
-* Additional battery analytics and visualization charts
-* Automated PDF report generation
-* Cloud-based data integration and storage
-* Real-time battery monitoring capabilities
-* Advanced battery health and degradation analytics
-* Machine Learning based anomaly detection and prediction
+### Long-Term Goal
 
-The long-term goal is to develop a scalable EV Battery Analytics Platform capable of supporting real-time monitoring, cloud connectivity, automated reporting, and intelligent battery diagnostics.
+To develop a scalable EV Battery Analytics Platform capable of real-time monitoring, automated reporting, intelligent battery diagnostics, and predictive maintenance analytics.
