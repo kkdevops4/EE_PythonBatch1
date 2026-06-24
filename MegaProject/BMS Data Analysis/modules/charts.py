@@ -1,4 +1,12 @@
+'''
+pip install kaleido
+'''
+
 import plotly.express as px
+
+def show_grid(fig):
+    fig.update_xaxes(showgrid=True)
+    fig.update_yaxes(showgrid=True)
 
 def create_soc_chart(df):
     fig = px.line(
@@ -11,9 +19,7 @@ def create_soc_chart(df):
             "soc_percent": "SoC (%)"
             }
         )
-    fig.update_xaxes(showgrid=True)
-    fig.update_yaxes(showgrid=True)
-
+    show_grid(fig)
     fig.write_image("output_data/soc_chart.png")
 
     return fig
@@ -29,9 +35,7 @@ def create_voltage_chart(df):
             "battery_voltage_v": "Voltage (V)"
             }
         )
-    fig.update_xaxes(showgrid=True)
-    fig.update_yaxes(showgrid=True)
-
+    show_grid(fig)
     fig.write_image("output_data/voltage_chart.png")
     return fig
 
@@ -47,9 +51,7 @@ def create_current_chart(df):
             "battery_current_a": "Current (A)"
             }
         )
-    fig.update_xaxes(showgrid=True)
-    fig.update_yaxes(showgrid=True)
-
+    show_grid(fig)
     fig.write_image("output_data/current_chart.png")
     return fig
 
@@ -65,9 +67,7 @@ def create_temp_chart(df):
             "battery_temp_c": "Temperature (°C)"
             }
         )
-    fig.update_xaxes(showgrid=True)
-    fig.update_yaxes(showgrid=True)
-
+    show_grid(fig)
     fig.add_hline(y=45,
                   line_dash="dash",
                   annotation_text="Warning Threshold (45°C)"

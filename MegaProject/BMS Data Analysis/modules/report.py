@@ -2,7 +2,6 @@
 # INSTALLS
 # =====================================================
 '''
-pip install kaleido
 pip install python-docx
 '''
 
@@ -10,8 +9,8 @@ pip install python-docx
 # IMPORTS
 # =====================================================
 import pandas as pd
-from analytics import *
-from charts import *
+from modules.analytics import *
+from modules.charts import *
 from datetime import datetime
 from docx import Document
 from docx.shared import Inches
@@ -28,36 +27,27 @@ def generate_report(df):
 
     soc = soc_summary(df)
     soh = soh_summary(df)
+    voltage = voltage_summary(df)
 
     latest_soc = soc["Latest SoC"]
     min_soc = soc["Minimum SoC"]
     max_soc = soc["Maximum SoC"]
     latest_soh = soh["Latest SoH"]
 
-    latest_voltage = round(df["battery_voltage_v"].iloc[-1], 2)
+    latest_voltage = voltage["Latest Voltage"]
     max_temp = round(df["battery_temp_c"].max(), 2)
 
 #HEALTH STATUS
-    if latest_soh >= 95:
-        health_status = "Excellent"
-    elif latest_soh >= 90:
-        health_status = "Good"
-    elif latest_soh >= 80:
-        health_status = "Moderate Degradation"
-    else: 
-        health_status = "Attention Required "
+    health_status = battery_health_status(latest_soh)
 
 #OVERALL STATUS
-    if latest_soh >= 90 and max_temp < 45:
-        overall_status = "Normal Operation"
-    elif latest_soh >= 80:
-        overall_status = "Monitor Condition"
-    else:
-        overall_status = "Attention Required"
+    overall_status = overall_condition(latest_soh,max_temp)
 
 #CHARGING HOURS
-    charging_rows = (df["state"] == "Charging").sum()
-    charging_hours = round((charging_rows * 10) / 3600, 2)
+    charging = charging_summary(df)
+
+    charging_hours = charging["Charging Hours"]
+    charging_status = charging["Charging Status"]
 
 # =====================================================
 # DOCUMENT CREATION
@@ -220,7 +210,7 @@ def generate_report(df):
     The battery operated with a maximum temperature of {max_temp}°C,
     maintained a State of Health of {latest_soh}%,
     and showed {charging_status.lower()}.
-    Overall battery condition was assessed as {health_status}.
+    Overall battery condition was assessed as {overall_status}.
     """
     )
 
@@ -244,25 +234,27 @@ def generate_report(df):
         print("PDF conversion failed")
         print(e)
 
-    
-    
+
+def create_report():
 # =====================================================
 # LOAD DATA
 # =====================================================
-df = load_data("processed_data/processed_battery_data.xlsx")
+    df = load_data("processed_data/processed_battery_data.xlsx")
 
 # =====================================================
 # CREATE CHARTS 
 # =====================================================
-create_soc_chart(df)
-create_voltage_chart(df)
-create_current_chart(df)
-create_temp_chart(df)
+    create_soc_chart(df)
+    create_voltage_chart(df)
+    create_current_chart(df)
+    create_temp_chart(df)
 
 # =====================================================
 # GENERATE REPORT
 # =====================================================
-generate_report(df)
-
-
-print("Report generated successfully")
+    generate_report(df)
+    print("Report generated successfully")
+ 
+    
+if __name__ == "__main__":
+    create_report()
