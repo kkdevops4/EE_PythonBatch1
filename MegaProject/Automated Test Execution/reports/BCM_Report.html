@@ -1,0 +1,438 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>BCM Validation Report</title>
+
+<style>
+
+body {
+    font-family: Arial;
+    background: #f4f6f9;
+    margin: 30px;
+}
+
+h1 {
+    color: #003366;
+}
+
+.summary {
+    display: flex;
+    gap: 20px;
+}
+
+.card {
+    flex: 1;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 2px 6px gray;
+}
+
+.pass-card {
+    border-left: 6px solid green;
+}
+
+.fail-card-summary {
+    border-left: 6px solid red;
+}
+
+.not-card {
+    border-left: 6px solid orange;
+}
+
+.pass-badge {
+    background: #d4edda;
+    color: green;
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.fail-badge {
+    background: #f8d7da;
+    color: red;
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.not-badge {
+    background: #fff3cd;
+    color: orange;
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+th {
+    background: #003366;
+    color: white;
+    padding: 10px;
+}
+
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+tr:hover {
+    background: #f5f5f5;
+}
+
+.failed-card {
+    background: #ffe5e5;
+    border-left: 6px solid red;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+
+.search-box {
+    width:350px;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
+.chart-container {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.chart-container img {
+    border-radius: 10px;
+    box-shadow: 0px 2px 8px gray;
+}
+</style>
+<script>
+
+function searchTable() {
+
+    let input = document.getElementById(
+        "searchInput"
+    );
+
+    let filter = input.value.toUpperCase();
+
+    let table = document.getElementById(
+        "reportTable"
+    );
+
+    let tr = table.getElementsByTagName(
+        "tr"
+    );
+
+    for (let i = 1; i < tr.length; i++) {
+
+        let txtValue =
+            tr[i].textContent ||
+            tr[i].innerText;
+
+        if (
+            txtValue.toUpperCase()
+            .indexOf(filter) > -1
+        ) {
+
+            tr[i].style.display = "";
+
+        } else {
+
+            tr[i].style.display = "none";
+        }
+    }
+}
+
+</script>
+</head>
+
+<body>
+
+<h1>🚗 BCM Door Functionality Validation Report</h1>
+
+<p>
+<b>Generated On:</b>
+08-Jul-2026 06:39 PM
+</p>
+
+<div class="summary">
+
+<div class="card pass-card">
+<h2>9</h2>
+Passed
+</div>
+
+<div class="card fail-card-summary">
+<h2>3</h2>
+Failed
+</div>
+
+<div class="card not-card">
+<h2>2</h2>
+Not Executed
+</div>
+
+</div>
+
+<br>
+
+<h2>Execution Summary</h2>
+
+<p>Total Test Cases : 14</p>
+<p>Pass Percentage : 64.29%</p>
+<p>Fail Percentage : 21.43%</p>
+<p>Not Executed Percentage : 14.29%</p>
+<h2>Execution Pie Chart</h2>
+
+
+<div class="chart-container">
+
+    <img src="pie_chart.png" width="500">
+
+</div>
+<h2>Search Test Cases</h2>
+
+<input
+    type="text"
+    id="searchInput"
+    class="search-box"
+    onkeyup="searchTable()"
+    placeholder="Search by TC ID, Status, Description..."
+>
+
+<h2>Detailed Test Results</h2>
+
+<table id="reportTable">
+
+<tr>
+<th>TC ID</th>
+<th>Description</th>
+<th>Ignition</th>
+<th>Speed</th>
+<th>Expected</th>
+<th>Actual</th>
+<th>Status</th>
+<th>Remarks</th>
+</tr>
+
+
+            <tr>
+                <td>TC01</td>
+                <td>Verify that all vehicle doors are locked successfully when the Lock button on the key fob is pressed</td>
+                <td>OFF</td>
+                <td>0</td>
+                <td>Door Locked</td>
+                <td>Door Unlocked</td>
+                <td><span class="fail-badge">FAIL</span></td>
+                <td>Driver Door Open, Rear Left Door Open, Boot Door Open, Lock Failed</td>
+            </tr>
+            
+            <tr>
+                <td>TC02</td>
+                <td>Verify that all vehicle doors are unlocked successfully when the Unlock button on the key fob is pressed </td>
+                <td>OFF</td>
+                <td>0</td>
+                <td>Door Unlocked</td>
+                <td>Door Unlocked</td>
+                <td><span class="pass-badge">PASS</span></td>
+                <td>Driver Door Open, Unlock Successful</td>
+            </tr>
+            
+            <tr>
+                <td>TC03</td>
+                <td>Verify that door unlock operation is allowed using the central unlocking switch when vehicle speed is below 10 km/h</td>
+                <td>ON</td>
+                <td>30</td>
+                <td>Door Locked</td>
+                <td>Door Locked</td>
+                <td><span class="pass-badge">PASS</span></td>
+                <td>Vehicle Speed Above Limit</td>
+            </tr>
+            
+            <tr>
+                <td>TC04</td>
+                <td>Verify that door unlock operation is blocked using the central unlocking switch when vehicle speed exceeds 10 km/h </td>
+                <td>ON</td>
+                <td>9</td>
+                <td>Door Unlocked</td>
+                <td>Door Unlocked</td>
+                <td><span class="pass-badge">PASS</span></td>
+                <td>Unlock Allowed</td>
+            </tr>
+            
+            <tr>
+                <td>TC05</td>
+                <td>Verify that central unlock request is allowed or not at the vehicle speed of 60 km/h </td>
+                <td>ON</td>
+                <td>60</td>
+                <td>Door Locked</td>
+                <td>Door Locked</td>
+                <td><span class="pass-badge">PASS</span></td>
+                <td>Driver Door Open, Rear Left Door Open, Vehicle Speed Above Limit</td>
+            </tr>
+            
+            <tr>
+                <td>TC06</td>
+                <td>Verify that automatic door locking is activated when vehicle speed exceeds 20 km/h</td>
+                <td>ON</td>
+                <td>15</td>
+                <td>Door Locked</td>
+                <td>Door Unlocked</td>
+                <td><span class="fail-badge">FAIL</span></td>
+                <td>Speed Below Auto Lock Threshold</td>
+            </tr>
+            
+            <tr>
+                <td>TC06</td>
+                <td>Verify that automatic door locking is activated when vehicle speed exceeds 20 km/h</td>
+                <td>ON</td>
+                <td>25</td>
+                <td>Door Locked</td>
+                <td>Not Executed</td>
+                <td><span class="not-badge">NOT EXECUTED</span></td>
+                <td>One or more mandatory fields are blank.</td>
+            </tr>
+            
+            <tr>
+                <td>TC07</td>
+                <td>Verify that key fob lock request is rejected when the driver door is open</td>
+                <td>ON</td>
+                <td>15</td>
+                <td>Door Unlocked</td>
+                <td>Door Unlocked</td>
+                <td><span class="pass-badge">PASS</span></td>
+                <td>Driver Door Open, Lock Failed</td>
+            </tr>
+            
+            <tr>
+                <td>TC08</td>
+                <td>Verify that all vehicle doors are locked successfully using the central locking switch</td>
+                <td>OFF</td>
+                <td>0</td>
+                <td>Door Locked</td>
+                <td>Door Unlocked</td>
+                <td><span class="fail-badge">FAIL</span></td>
+                <td>Driver Door Open, Central Lock Failed</td>
+            </tr>
+            
+            <tr>
+                <td>TC09</td>
+                <td>Verify that all vehicle doors are unlocked successfully using the central unlocking switch</td>
+                <td>OFF</td>
+                <td>0</td>
+                <td>Door Unlocked</td>
+                <td>Door Unlocked</td>
+                <td><span class="pass-badge">PASS</span></td>
+                <td>Rear Right Door Open, Unlock Allowed</td>
+            </tr>
+            
+            <tr>
+                <td>TC10</td>
+                <td>Verify that lock request through the key fob is rejected when the boot door is open and the vehicle is parked </td>
+                <td>OFF</td>
+                <td>0</td>
+                <td>Door Unlocked</td>
+                <td>Door Unlocked</td>
+                <td><span class="pass-badge">PASS</span></td>
+                <td>Boot Door Open, Lock Failed</td>
+            </tr>
+            
+            <tr>
+                <td>TC11</td>
+                <td>Verify lock request when some fields are missing</td>
+                <td>OFF</td>
+                <td>0</td>
+                <td>Door Locked</td>
+                <td>Not Executed</td>
+                <td><span class="not-badge">NOT EXECUTED</span></td>
+                <td>One or more mandatory fields are blank.</td>
+            </tr>
+            
+            <tr>
+                <td>TC12</td>
+                <td>Verify that all vehicle doors are locked successfully when the Lock button on the key fob is pressed</td>
+                <td>OFF</td>
+                <td>0</td>
+                <td>Door Locked</td>
+                <td>Door Locked</td>
+                <td><span class="pass-badge">PASS</span></td>
+                <td>Lock Successful</td>
+            </tr>
+            
+            <tr>
+                <td>TC13</td>
+                <td>Verify that all vehicle doors are unlocked successfully when the Unlock button on the key fob is pressed </td>
+                <td>OFF</td>
+                <td>0</td>
+                <td>Door Unlocked</td>
+                <td>Door Unlocked</td>
+                <td><span class="pass-badge">PASS</span></td>
+                <td>Unlock Successful</td>
+            </tr>
+            
+
+</table>
+<br>
+
+<h2>Failed Test Cases</h2>
+
+
+            <div class="failed-card">
+                <h4>TC01</h4>
+
+                <p>
+                    <b>Description:</b>
+                    Verify that all vehicle doors are locked successfully when the Lock button on the key fob is pressed
+                </p>
+
+                <p>
+                    <b>Remarks:</b>
+                    Driver Door Open, Rear Left Door Open, Boot Door Open, Lock Failed
+                </p>
+            </div>
+            
+            <div class="failed-card">
+                <h4>TC06</h4>
+
+                <p>
+                    <b>Description:</b>
+                    Verify that automatic door locking is activated when vehicle speed exceeds 20 km/h
+                </p>
+
+                <p>
+                    <b>Remarks:</b>
+                    Speed Below Auto Lock Threshold
+                </p>
+            </div>
+            
+            <div class="failed-card">
+                <h4>TC08</h4>
+
+                <p>
+                    <b>Description:</b>
+                    Verify that all vehicle doors are locked successfully using the central locking switch
+                </p>
+
+                <p>
+                    <b>Remarks:</b>
+                    Driver Door Open, Central Lock Failed
+                </p>
+            </div>
+            
+
+</body>
+
+</html>

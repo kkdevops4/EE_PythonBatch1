@@ -1,0 +1,355 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>BCM Validation Report</title>
+
+<style>
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f9;
+    margin: 20px;
+}
+
+.container {
+    max-width: 1400px;
+    margin: auto;
+}
+
+h1 {
+    text-align: center;
+    color: #003366;
+}
+
+.card-container {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.card {
+    flex: 1;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.pass-card {
+    border-left: 6px solid green;
+}
+
+.fail-card {
+    border-left: 6px solid red;
+}
+
+.not-card {
+    border-left: 6px solid orange;
+}
+
+.summary {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.chart {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+th {
+    background: #003366;
+    color: white;
+    padding: 10px;
+}
+
+td {
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+.pass {
+    background-color: #d4edda;
+    color: green;
+    font-weight: bold;
+}
+
+.fail {
+    background-color: #f8d7da;
+    color: red;
+    font-weight: bold;
+}
+
+.not-executed {
+    background-color: #fff3cd;
+    color: orange;
+    font-weight: bold;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+.footer {
+    margin-top: 25px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>
+🚗 BCM Door Functionality Validation Report
+</h1>
+
+<div class="card-container">
+
+<div class="card pass-card">
+<h2>5</h2>
+<p>Passed</p>
+</div>
+
+<div class="card fail-card">
+<h2>6</h2>
+<p>Failed</p>
+</div>
+
+<div class="card not-card">
+<h2>1</h2>
+<p>Not Executed</p>
+</div>
+
+</div>
+
+<div class="summary">
+
+<h2>Execution Summary</h2>
+
+<p><b>Total Test Cases:</b> 12</p>
+<p><b>Pass Percentage:</b> 41.67%</p>
+<p><b>Fail Percentage:</b> 50.00%</p>
+<p><b>Not Executed Percentage:</b> 8.33%</p>
+
+</div>
+
+<div class="chart">
+
+<h2>Execution Pie Chart</h2>
+
+<img src="C:\Users\oh99312\Desktop\Updated\reports\pie_chart.png" width="500">
+
+</div>
+
+<h2>Detailed Test Results</h2>
+
+<table>
+
+<tr>
+<th>TC ID</th>
+<th>Description</th>
+<th>Ignition</th>
+<th>Speed</th>
+<th>Expected</th>
+<th>Actual</th>
+<th>Status</th>
+<th>Remarks</th>
+</tr>
+
+
+            <tr>
+                <td>TC01</td>
+                <td>Lock door using key fob</td>
+                <td>OFF</td>
+                <td>0</td>
+                <td>Door Locked</td>
+                <td>Door Unlocked</td>
+                <td class="fail">
+                    Fail
+                </td>
+                <td>Driver Door Open, Rear Left Door Open, Boot Door Open, Lock Failed</td>
+            </tr>
+            
+            <tr>
+                <td>TC02</td>
+                <td>Unlock door using key fob</td>
+                <td>OFF</td>
+                <td>0</td>
+                <td>Door Unlocked</td>
+                <td>Door Unlocked</td>
+                <td class="pass">
+                    Pass
+                </td>
+                <td>Driver Door Open, Unlock Successful</td>
+            </tr>
+            
+            <tr>
+                <td>TC03</td>
+                <td>Verify unlock is allowed at low speed value<10</td>
+                <td>ON</td>
+                <td>30</td>
+                <td>Door Locked</td>
+                <td>Door Unlocked</td>
+                <td class="fail">
+                    Fail
+                </td>
+                <td>Unlock Allowed</td>
+            </tr>
+            
+            <tr>
+                <td>TC04</td>
+                <td>Verify unlock is blocked above speed limit>10</td>
+                <td>ON</td>
+                <td>9</td>
+                <td>Door Unlocked</td>
+                <td>Door Unlocked</td>
+                <td class="pass">
+                    Pass
+                </td>
+                <td>Rear Right Door Open, Unlock Allowed</td>
+            </tr>
+            
+            <tr>
+                <td>TC05</td>
+                <td>Verify unlock at boundary value 60 km/h</td>
+                <td>ON</td>
+                <td>50</td>
+                <td>Door Locked</td>
+                <td>Door Unlocked</td>
+                <td class="fail">
+                    Fail
+                </td>
+                <td>Driver Door Open, Rear Left Door Open, Unlock Allowed</td>
+            </tr>
+            
+            <tr>
+                <td>TC06</td>
+                <td>Verify auto-lock activates above 20 km/h</td>
+                <td>ON</td>
+                <td>25</td>
+                <td>Door Locked</td>
+                <td>Door Locked</td>
+                <td class="pass">
+                    Pass
+                </td>
+                <td>Auto Lock Activated</td>
+            </tr>
+            
+            <tr>
+                <td>TC07</td>
+                <td>Verify auto-lock does not activate below threshold(20)</td>
+                <td>ON</td>
+                <td>15</td>
+                <td>Door Unlocked</td>
+                <td>Door Unlocked</td>
+                <td class="pass">
+                    Pass
+                </td>
+                <td>Rear Right Door Open, Speed Below Auto Lock Threshold</td>
+            </tr>
+            
+            <tr>
+                <td>TC08</td>
+                <td>Verify lock command when driver door is open</td>
+                <td>OFF</td>
+                <td>0</td>
+                <td>Door Locked</td>
+                <td>Door Unlocked</td>
+                <td class="fail">
+                    Fail
+                </td>
+                <td>Driver Door Open, Lock Failed</td>
+            </tr>
+            
+            <tr>
+                <td>TC09</td>
+                <td>Verify central lock request</td>
+                <td>OFF</td>
+                <td>0</td>
+                <td>Door Locked</td>
+                <td>Door Unlocked</td>
+                <td class="fail">
+                    Fail
+                </td>
+                <td>Rear Right Door Open, Central Lock Failed</td>
+            </tr>
+            
+            <tr>
+                <td>TC10</td>
+                <td>Verify central unlock request</td>
+                <td>OFF</td>
+                <td>0</td>
+                <td>Door Unlocked</td>
+                <td>Door Unlocked</td>
+                <td class="pass">
+                    Pass
+                </td>
+                <td>Unlock Allowed</td>
+            </tr>
+            
+            <tr>
+                <td>TC11</td>
+                <td>Verify lock request when boot door open</td>
+                <td>OFF</td>
+                <td>0</td>
+                <td>Door Locked</td>
+                <td>Door Unlocked</td>
+                <td class="fail">
+                    Fail
+                </td>
+                <td>Boot Door Open, Lock Failed</td>
+            </tr>
+            
+            <tr>
+                <td>TC12</td>
+                <td>Verify lock request when boot door open</td>
+                <td>OFF</td>
+                <td>0</td>
+                <td>Door Locked</td>
+                <td>Not Executed</td>
+                <td class="not-executed">
+                    Not Executed
+                </td>
+                <td>One or more mandatory fields are blank.</td>
+            </tr>
+            
+
+</table>
+
+<div class="footer">
+
+<h2>Conclusion</h2>
+
+<p>
+Total Test Cases : 12<br>
+Passed : 5<br>
+Failed : 6<br>
+Not Executed : 1<br><br>
+
+Overall Pass Rate : 41.67%
+</p>
+
+</div>
+
+</div>
+
+</body>
+</html>

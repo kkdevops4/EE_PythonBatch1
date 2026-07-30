@@ -3,10 +3,15 @@ from modules.bcm_validator import BCMValidator
 from modules.chart_generator import ChartGenerator
 from modules.report_generator import ReportGenerator
 
+from datetime import datetime
+
+from modules.html_report_generator import HTMLReportGenerator
+
+
 # Uncomment when docx2pdf is installed
 from modules.pdf_converter import PDFConverter
 
-EXCEL_FILE = "data/bcm_testcases.xlsx"
+EXCEL_FILE = r"C:\Users\oh99312\Desktop\Updated\data\bcm_testcases.xlsx"
 
 # Read Excel
 df = ExcelReader.read_excel(EXCEL_FILE)
@@ -20,9 +25,24 @@ actual_results = []
 remarks_list = []
 
 # Execute BCM validation
-for _, row in df.iterrows():
+# for index, row in df.iterrows():
 
-    actual_result, remarks = BCMValidator.validate(row)
+#     actual_result, remarks = BCMValidator.validate(row)
+
+#     actual_results.append(actual_result)
+#     remarks_list.append(remarks)
+
+
+for index, row in df.iterrows():
+
+    # Check if any field in the row is blank
+    if row.isnull().any() or (row.astype(str).str.strip() == "").any():
+
+        actual_result = "Not Executed"
+        remarks = "One or more mandatory fields are blank."
+
+    else:
+        actual_result, remarks = BCMValidator.validate(row)
 
     actual_results.append(actual_result)
     remarks_list.append(remarks)
@@ -32,37 +52,67 @@ df["Actual_Result"] = actual_results
 df["Remarks"] = remarks_list
 
 # Compare Expected vs Actual
-df["Status"] = df.apply(
-    lambda row:
-    "Pass"
-    if str(row["Expected_Result"]).strip()
-       ==
-       str(row["Actual_Result"]).strip()
-    else "Fail",
-    axis=1
-)
+# df["Status"] = df.apply(
+#     lambda row:
+#     "Pass"
+#     if str(row["Expected_Result"]).strip()
+#        ==
+#        str(row["Actual_Result"]).strip()
+#     else "Fail",
+#     axis=1
+# )
+def get_status(row):
+
+    if str(row["Actual_Result"]).strip() == "Not Executed":
+        return "Not Executed"
+
+    elif str(row["Expected_Result"]).strip() == \
+         str(row["Actual_Result"]).strip():
+        return "Pass"
+
+    else:
+        return "Fail"
+
+df["Status"] = df.apply(get_status, axis=1)
 
 # Calculate statistics
+pass_count = len(df[df["Status"] == "Pass"])
+
+fail_count = len(df[df["Status"] == "Fail"])
+
+not_executed_count = len(
+    df[df["Status"] == "Not Executed"]
+)
+
 total_tc = len(df)
 
-pass_count = len(
-    df[df["Status"] == "Pass"]
-)
+# pass_count = len(
+#     df[df["Status"] == "Pass"]
+# )
 
-fail_count = len(
-    df[df["Status"] == "Fail"]
-)
+# fail_count = len(
+#     df[df["Status"] == "Fail"]
+# )
+
+
+# print("\n========== EXECUTION SUMMARY ==========")
+# print(f"Total Test Cases : {total_tc}")
+# print(f"Passed           : {pass_count}")
+# print(f"Failed           : {fail_count}")
+# print("=======================================\n")
 
 print("\n========== EXECUTION SUMMARY ==========")
 print(f"Total Test Cases : {total_tc}")
 print(f"Passed           : {pass_count}")
 print(f"Failed           : {fail_count}")
+print(f"Not Executed     : {not_executed_count}")
 print("=======================================\n")
 
 # Generate Pie Chart
 ChartGenerator.generate(
     pass_count=pass_count,
     fail_count=fail_count,
+    not_executed_count=not_executed_count,
     output_file="reports/pie_chart.png"
 )
 
@@ -71,6 +121,7 @@ ReportGenerator.create_report(
     df=df,
     pass_count=pass_count,
     fail_count=fail_count,
+    not_executed_count=not_executed_count,
     chart_path="reports/pie_chart.png",
     output_docx="reports/BCM_Report.docx"
 )
@@ -82,7 +133,14 @@ PDFConverter.convert_to_pdf(
     pdf_file="reports/BCM_Report.pdf"
 )
 
-
+HTMLReportGenerator.create_html_report(
+    df=df,
+    pass_count=pass_count,
+    fail_count=fail_count,
+    not_executed_count=not_executed_count,
+    chart_path="pie_chart.png",
+    output_html="reports/BCM_Report.html"
+)
 # print("Report Generated Successfully")
 # print("Word Report : reports/BCM_Report.docx")
 

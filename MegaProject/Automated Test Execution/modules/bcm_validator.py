@@ -5,7 +5,7 @@ class BCMValidator:
 
         action = str(row["User_action"]).strip().lower()
 
-        speed = row["Vehicle_Speed_ (km/h)"]
+        speed = row["Vehicle_Speed_(km/h)"]
 
         driver = str(row["Driver_Door"]).strip().title()
         passenger = str(row["Passenger_Door"]).strip().title()
@@ -53,6 +53,7 @@ class BCMValidator:
             remarks.append("Unlock Successful")
 
         elif action == "central_lock":
+            
 
             if all_closed:
                 actual = "Door Locked"
@@ -63,7 +64,7 @@ class BCMValidator:
 
         elif action == "central_unlock":
 
-            if speed <= 60:
+            if speed <= 10:
                 actual = "Door Unlocked"
                 remarks.append("Unlock Allowed")
             else:
